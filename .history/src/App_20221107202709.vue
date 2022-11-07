@@ -16,10 +16,4 @@
 export default {}
 </script>
 
-<style lang="less" scoped>
-.box {
-  width: 750px;
-  height: 60px;
-  background-color: pink;
-}
-</style>
+<style lang="less" scoped></style>

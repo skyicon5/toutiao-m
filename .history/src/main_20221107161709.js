@@ -4,14 +4,11 @@ import router from './router'
 import store from './store'
 // 引入全局样式
 import './styles/index.less'
+import { Button } from 'vant'
+import { createApp } from 'vue'
+const app = createApp()
+app.use(Button)
 
-import Vant from 'vant'
-
-import 'vant/lib/index.css'
-// 加载动态设置 rem基准值
-import 'amfe-flexible'
-
-Vue.use(Vant)
 Vue.config.productionTip = false
 
 new Vue({

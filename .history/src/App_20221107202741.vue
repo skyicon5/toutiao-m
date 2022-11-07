@@ -18,7 +18,7 @@ export default {}
 
 <style lang="less" scoped>
 .box {
-  width: 750px;
+  width: 370px;
   height: 60px;
   background-color: pink;
 }
