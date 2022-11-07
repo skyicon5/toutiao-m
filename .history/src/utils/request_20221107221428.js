@@ -9,14 +9,6 @@ const request = axios.create({
 // 请求拦截器
 
 // 响应拦截器
-request.interceptors.response.use(
-  (response) => {
-    return response.data
-  },
-  (e) => {
-    return Promise.reject(e)
-  }
-)
 
 // 暴露出去
 export default request
