@@ -1,4 +1,4 @@
-import { getToken, saveToken } from '@/utils/token'
+import { getToken } from '@/utils/token'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -12,7 +12,6 @@ export default new Vuex.Store({
   mutations: {
     setToken(state, obj) {
       state.tokenObj = obj
-      saveToken(obj)
     }
   },
   actions: {},

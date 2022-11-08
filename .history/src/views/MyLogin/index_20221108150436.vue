@@ -20,19 +20,13 @@
       >
         <i slot="left-icon" class="iconfont icon-yanzhengma"></i>
         <template #button>
-          <van-count-down
-            v-if="isCountDownShow"
-            :time="totalTime"
-            format="ss s"
-            @finish="isCountDownShow = false"
-          />
           <van-button
-            v-else
             class="send-sms-btn"
             round
             type="default"
             size="small"
             @click="countDown"
+            :disabled="!canClick"
             native-type="button"
           >
             {{ content }}
@@ -57,7 +51,7 @@
 </template>
 
 <script>
-import { loginApi, sendSms } from '@/api'
+import { loginApi } from '@/api'
 export default {
   data() {
     return {
@@ -76,9 +70,8 @@ export default {
         ]
       },
       content: '发送验证码',
-      totalTime: 1000 * 10,
-      isCountDownShow: false,
-      // canClick: true,
+      totalTime: 10,
+      canClick: true,
       isLoading: false
     }
   },
@@ -92,15 +85,8 @@ export default {
       })
       try {
         const res = await loginApi(this.form)
-        this.$store.commit('setToken', res.data)
         this.$toast.success('登录成功')
-        // 进行跳转，看有没有参数，如何拿到路由参数？
-        if (this.$route.query.back) {
-          // 跳转到back记录的路径
-          this.$router.push(this.$route.query.back)
-        } else {
-          this.$router.replace({ path: '/layout/home' })
-        }
+        console.log(res)
       } catch (e) {
         if (e.response.status === 400) {
           this.$toast.fail('你的手机号或者验证码有误')
@@ -111,15 +97,10 @@ export default {
       this.isLoading = false
     },
     // 验证码按钮
-    async countDown() {
+    countDown() {
       // 1. 校验手机号
-      try {
-        await this.$refs.loginForm.validate('mobile')
-      } catch (e) {
-        return console.log('验证失败', e)
-      }
-      // 2.验证通过，显示倒计时
-      /*
+      this.$refs.loginForm.validate('mobile')
+      // 2.倒计时
       if (!this.canClick) return
       this.canClick = false
       this.content = this.totalTime + 's后重新发送'
@@ -133,21 +114,6 @@ export default {
           this.canClick = true // 解除禁用按钮
         }
       }, 1000)
-      */
-      this.isCountDownShow = true
-      // 3.请求发送验证码
-      try {
-        await sendSms(this.form.mobile)
-        this.$toast.success('已发送验证码')
-      } catch (e) {
-        // 发送失败，关闭倒计时
-        this.isCountDownShow = false
-        if (e.response.status === 429) {
-          this.$toast('发送太频繁，请稍后重试')
-        } else {
-          this.$toast('发送失败,请稍后重试')
-        }
-      }
     }
   }
 }

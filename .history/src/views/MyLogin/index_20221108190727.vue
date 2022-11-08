@@ -94,13 +94,6 @@ export default {
         const res = await loginApi(this.form)
         this.$store.commit('setToken', res.data)
         this.$toast.success('登录成功')
-        // 进行跳转，看有没有参数，如何拿到路由参数？
-        if (this.$route.query.back) {
-          // 跳转到back记录的路径
-          this.$router.push(this.$route.query.back)
-        } else {
-          this.$router.replace({ path: '/layout/home' })
-        }
       } catch (e) {
         if (e.response.status === 400) {
           this.$toast.fail('你的手机号或者验证码有误')

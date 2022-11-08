@@ -1,0 +1,16 @@
+<template>
+  <div>
+    <van-nav-bar fixed>
+      <template #left>
+        <img src="" alt="" />
+      </template>
+    </van-nav-bar>
+  </div>
+</template>
+
+<script>
+import logo from '../../assets/logo.png'
+export default {}
+</script>
+
+<style lang="less" scoped></style>

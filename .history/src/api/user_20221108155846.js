@@ -14,7 +14,6 @@ export const loginApi = (data) => {
 
 /**
  * 获取短信验证码
- * 每手机号每分钟1次
  */
 export const sendSms = (mobile) => {
   return request({

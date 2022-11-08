@@ -92,15 +92,8 @@ export default {
       })
       try {
         const res = await loginApi(this.form)
-        this.$store.commit('setToken', res.data)
         this.$toast.success('登录成功')
-        // 进行跳转，看有没有参数，如何拿到路由参数？
-        if (this.$route.query.back) {
-          // 跳转到back记录的路径
-          this.$router.push(this.$route.query.back)
-        } else {
-          this.$router.replace({ path: '/layout/home' })
-        }
+        console.log(res)
       } catch (e) {
         if (e.response.status === 400) {
           this.$toast.fail('你的手机号或者验证码有误')
@@ -115,6 +108,7 @@ export default {
       // 1. 校验手机号
       try {
         await this.$refs.loginForm.validate('mobile')
+        this.$toast.success('已发送验证码')
       } catch (e) {
         return console.log('验证失败', e)
       }
@@ -137,16 +131,10 @@ export default {
       this.isCountDownShow = true
       // 3.请求发送验证码
       try {
-        await sendSms(this.form.mobile)
-        this.$toast.success('已发送验证码')
+        const res = await sendSms(this.form.mobile)
+        console.log('发送验证码', res)
       } catch (e) {
-        // 发送失败，关闭倒计时
-        this.isCountDownShow = false
-        if (e.response.status === 429) {
-          this.$toast('发送太频繁，请稍后重试')
-        } else {
-          this.$toast('发送失败,请稍后重试')
-        }
+        console.log(e)
       }
     }
   }
